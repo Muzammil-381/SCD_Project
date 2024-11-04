@@ -34,6 +34,7 @@ Route::prefix('/')->group(function(){
     });
     Route::get('about', [WebController::class, 'about'])->name('about');
     Route::get('blog', [WebController::class, 'blog'])->name('blog'); 
+    Route::get('shop', [WebController::class, 'shop'])->name('shop');
 });
 
 require __DIR__.'/auth.php';

@@ -32,6 +32,41 @@
       .font_set{
         font-size: large;
       }
+      .search-form {
+          display: flex; /* Use flexbox to align items */
+          align-items: center; /* Center items vertically */
+          border-radius: 25px; /* Rounded corners */
+          overflow: hidden; /* Prevent content overflow */
+          background-color: #ffffff; /* White background for the search bar */
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      }
+
+      .search-form .form-control {
+          border: none; /* Remove default border */
+          border-radius: 25px 0 0 25px; /* Rounded corners on the left */
+          padding: 10px 15px; /* Add padding */
+          font-size: 16px; /* Increase font size */
+      }
+
+      .search-form .btn {
+          border: none; /* Remove default border */
+          border-radius: 0 25px 25px 0; /* Rounded corners on the right */
+          background-color: #28a745; /* Bootstrap success color */
+          color: white; /* Text color */
+          padding: 10px 20px; /* Add padding */
+          font-size: 16px; /* Increase font size */
+          transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+      }
+
+      .search-form .btn:hover {
+          background-color: #218838; /* Darker green on hover */
+          transform: scale(1.05); /* Slightly enlarge on hover */
+      }
+
+      .search-form .form-control:focus {
+          outline: none; /* Remove outline on focus */
+          box-shadow: 0 0 5px rgba(40, 167, 69, 0.5); /* Shadow effect on focus */
+      }
     </style>
   </head>
   <body class="goto-here">
