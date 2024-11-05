@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
 
 
@@ -35,6 +36,8 @@ Route::prefix('/')->group(function(){
     Route::get('about', [WebController::class, 'about'])->name('about');
     Route::get('blog', [WebController::class, 'blog'])->name('blog'); 
     Route::get('shop', [WebController::class, 'shop'])->name('shop');
+    Route::get('productdetail', [WebController::class, 'productdetail'])->name('productdetail');
+
 });
 
 require __DIR__.'/auth.php';

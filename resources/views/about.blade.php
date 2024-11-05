@@ -1,5 +1,5 @@
 <x-web-layout title="About">
-    <div class="hero-wrap hero-bread" style="background-image:">
+    <div class="hero-wrap hero-bread" style="background-image:url({{asset('assets/images/bg_6.jpg') }});">
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
@@ -13,7 +13,7 @@
     <section class="ftco-section ftco-no-pb ftco-no-pt bg-light">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image:">
+					<div class="col-md-5 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url({{ asset('assets/images/about.jpg') }});">
 						<a href="https://vimeo.com/45830194" class="icon popup-vimeo d-flex justify-content-center align-items-center">
 							<span class="icon-play"></span>
 						</a>

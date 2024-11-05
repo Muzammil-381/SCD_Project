@@ -15,4 +15,7 @@ class WebController extends Controller
     public function shop(){
         return view('shop');
     }
+    public function productdetail(){
+        return view('productdetail');
+    }
 }
