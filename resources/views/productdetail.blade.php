@@ -15,8 +15,8 @@
 
             <!-- Product Information Section -->
             <div class="col-md-6">
-                <h1 class="h3">Product Name</h1>
-                <p class="text-danger h4">$99.99</p>
+                <h1 class="h3">Jacket</h1>
+                <p class="text-danger h4">$19.99</p>
                 <p class="text-muted">
                     A brief description of the product goes here. Highlight the main features and benefits to engage customers.
                 </p>
