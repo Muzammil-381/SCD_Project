@@ -1,116 +1,74 @@
 <?php
-
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use App\Models\Category;
 use App\Models\Product;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $products = Product::all();
-        return view('admin.product.product', compact('products'));
+        $products = Product::with('category')->get();
+        return view('admin.products.index', compact('products'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('admin.product.new_product');
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // Validate incoming data
         $request->validate([
-            'p_name' => 'required|string|max:255',
-            'p_details' => 'nullable|string',
-            'p_image' => 'nullable|string|max:255',
-            'p_status' => 'nullable|string|max:50',
-            'p_price' => 'required|numeric|min:0',
+            'name' => 'required|string|max:255',
+            'details' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Create new product
-        Product::create([
-            'name' => $request->p_name,
-            'details' => $request->p_details,
-            'image' => $request->p_image,
-            'status' => $request->p_status,
-            'price' => $request->p_price,
-        ]);
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        $product = new Product();
+        $product->name = $request->name;
+        $product->details = $request->details;
+        $product->price = $request->price;
+        $product->category_id = $request->category_id;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
+        }
+        $product->save();
+        return redirect()->route('dashboard');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($id);
-        return view('admin.product.edit_product', compact('product'));
+        $categories = Category::all();
+        return view('admin.products.edit', compact('product', 'categories'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        // Validate incoming data
         $request->validate([
-            'p_name' => 'required|string|max:255',
-            'p_details' => 'nullable|string',
-            'p_image' => 'nullable|string|max:255',
-            'p_status' => 'nullable|string|max:50',
-            'p_price' => 'required|numeric|min:0',
+            'name' => 'required|string|max:255',
+            'details' => 'required|string',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Find and update product
-        $product = Product::findOrFail($id);
-        $product->update([
-            'name' => $request->p_name,
-            'details' => $request->p_details,
-            'image' => $request->p_image,
-            'status' => $request->p_status,
-            'price' => $request->p_price,
-        ]);
-
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        if ($request->hasFile('image')) {
+            // Delete the old image
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+            $imagePath = $request->file('image')->store('products', 'public');
+            $product->image = $imagePath;
+        }
+        $product->update();
+        return redirect()->route('dashboard')->with('success', 'product updated successfully!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function show(Product $product)
     {
-        $product = Product::findOrFail($id);
+        return view('admin.products.view', compact('product'));
+    }
+    public function destroy(Product $product)
+    {
         $product->delete();
-
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('dashboard')->with('success', 'product deleted successfully!');
     }
 }

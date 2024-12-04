@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +28,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Product Routes
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index'); // List products
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create'); // Show form to create
-    Route::post('/products', [ProductController::class, 'store'])->name('add_product'); // Store new product
-    Route::get('/products/edit/{id}', [ProductController::class, 'edit'])->name('products.edit'); // Show edit form
-    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update'); // Update product
-    Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy'); // Delete product
+    Route::get('/dashboard', [ProductController::class, 'index'])->name('dashboard'); // Home dashboard
+    Route::get('/dashboard/products/create', [ProductController::class, 'create'])->name('products.create'); // Add new movie form
+    Route::post('/dashboard/products', [ProductController::class, 'store'])->name('products.store'); // Store movie
+    Route::get('/dashboard/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit'); // Edit movie
+    Route::put('/dashboard/products/{product}', [ProductController::class, 'update'])->name('products.update'); // Update movie
+    Route::delete('/dashboard/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy'); // Delete movie
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+    //category routes
+
+    Route::get('/dashboard/categories', [CategoryController::class, 'index'])->name('categories.index'); // Show all categories
+    Route::get('/dashboard/categories/create', [CategoryController::class, 'create'])->name('categories.create'); // Add new category form
+    Route::post('/dashboard/categories', [CategoryController::class, 'store'])->name('categories.store'); // Store category
+    Route::get('/dashboard/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit'); // Edit category
+    Route::put('/dashboard/categories/{category}', [CategoryController::class, 'update'])->name('categories.update'); // Update category
+    Route::delete('/dashboard/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 });
 
 // Public Website Routes
@@ -44,7 +54,7 @@ Route::prefix('/')->group(function () {
     Route::get('blog', [WebController::class, 'blog'])->name('blog'); // Blog page
     Route::get('shop', [WebController::class, 'shop'])->name('shop'); // Shop page
     Route::get('productdetail', [WebController::class, 'productdetail'])->name('productdetail'); // Product details page
-});
+    });
 
 // Auth Routes
 require __DIR__.'/auth.php';
