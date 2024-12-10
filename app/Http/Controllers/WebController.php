@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class WebController extends Controller
 {
@@ -15,7 +17,12 @@ class WebController extends Controller
     public function shop(){
         return view('shop');
     }
-    public function productdetail(){
-        return view('productdetail');
+    public function productdetail($id){
+        $product = Product::find($id);
+        return view('productdetail',compact('product'));
+    }
+    public function welcome(){
+        $products = Product::with('category')->take(4)->get();
+        return view('welcome',compact('products'));
     }
 }

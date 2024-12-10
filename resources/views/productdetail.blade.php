@@ -4,19 +4,18 @@
             <!-- Product Image Section -->
             <div class="col-md-6">
                 <div class="mb-4">
-                    <img src="assets/images/product-1.jpg" class="img-fluid rounded" alt="Product Image">
-                </div>
-                <div class="d-flex">
-                    <img src="assets/images/product-2.jpg" class="img-thumbnail mr-2" style="width: 80px;" alt="Thumbnail 1">
-                    <img src="assets/images/product-3.jpg" class="img-thumbnail mr-2" style="width: 80px;" alt="Thumbnail 2">
-                    <img src="assets/images/product-4.jpg" class="img-thumbnail" style="width: 80px;" alt="Thumbnail 3">
+                @if($product->image)
+                                <img class="img-fluid" src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" >
+                            @else
+                                <span>No Image</span>
+                            @endif	
                 </div>
             </div>
 
             <!-- Product Information Section -->
             <div class="col-md-6">
-                <h1 class="h3">Jacket</h1>
-                <p class="text-danger h4">$19.99</p>
+                <h1 class="h3">{{ $product->name }}</h1>
+                <p class="text-danger h4">{{$product->price}}</p>
                 <p class="text-muted">
                     A brief description of the product goes here. Highlight the main features and benefits to engage customers.
                 </p>

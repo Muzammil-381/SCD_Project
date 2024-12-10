@@ -47,13 +47,11 @@ Route::middleware('auth')->group(function () {
 
 // Public Website Routes
 Route::prefix('/')->group(function () {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', [WebController::class, 'welcome'])->name('welcome'); // About page
     Route::get('about', [WebController::class, 'about'])->name('about'); // About page
     Route::get('blog', [WebController::class, 'blog'])->name('blog'); // Blog page
     Route::get('shop', [WebController::class, 'shop'])->name('shop'); // Shop page
-    Route::get('productdetail', [WebController::class, 'productdetail'])->name('productdetail'); // Product details page
+    Route::get('productdetail/{id}', [WebController::class, 'productdetail'])->name('productdetail'); // Product details page
     });
 
 // Auth Routes
