@@ -55,7 +55,10 @@ Route::prefix('/')->group(function () {
     Route::get('blog', [WebController::class, 'blog'])->name('blog'); // Blog page
     Route::get('shop', [WebController::class, 'shop'])->name('shop'); // Shop page
     Route::get('productdetail/{id}', [WebController::class, 'productdetail'])->name('productdetail'); // Product details page
+    Route::get('/order', [WebController::class, 'orders'])->name('orders');
+    Route::get('/order_now', [WebController::class, 'order_now'])->name('order_now');
     });
+    
 
 // Auth Routes
 require __DIR__.'/auth.php';
